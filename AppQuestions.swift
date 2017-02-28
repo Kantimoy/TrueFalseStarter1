@@ -26,8 +26,7 @@ class Questions {
 
 
 
-let allQuestions: [Questions] = [Questions(question: "This was the only US President to serve more than two consecutive terms.",
-                                           answer: ["option1": "George Washington", "option2": "Franklin D. Roosevelt", "option3": "Woodrow Wilson", "option4": "Andrew Jackson"], correctAnswer: "Franklin D. Roosevelt"),
+let allQuestions: [Questions] = [Questions(question: "This was the only US President to serve more than two consecutive terms.", answer: ["option1": "George Washington", "option2": "Franklin D. Roosevelt", "option3": "Woodrow Wilson", "option4": "Andrew Jackson"], correctAnswer: "Franklin D. Roosevelt"),
 Questions(question: "Which of the following countries has the most residents?", answer: ["option1": "Nigeria", "option2": "Russia", "option3": "Iran", "option4": "Vietnam"],correctAnswer: "Russia"),
 Questions(question: "In what year was the United Nations founded?", answer: ["option1": "1918", "option2": "1919", "option3": "1945", "option4": "1954"], correctAnswer: "1945"),
 
