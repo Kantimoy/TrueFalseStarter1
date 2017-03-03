@@ -21,10 +21,14 @@ class ViewController: UIViewController {
     
     var gameSound: SystemSoundID = 0
     
+    
+    var time = 0
+    var timer = Timer()
+    
     let trivia = allQuestions
     
     @IBOutlet weak var questionField: UILabel!
-    @IBOutlet weak var DisplayAnswer: UILabel!
+    @IBOutlet weak var CorrectAnswer: UILabel!
     
     @IBOutlet weak var option1: UIButton!
     @IBOutlet weak var option2: UIButton!
@@ -33,6 +37,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var playAgainButton: UIButton!
     
+    @IBOutlet weak var timeLeft: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,10 +53,16 @@ class ViewController: UIViewController {
     }
     
     func displayQuestion() {
+        
+        // Correct answer is hidden while asking question.
+        CorrectAnswer.isHidden = true
+        
+        
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: trivia.count)
         let questionDictionary = trivia[indexOfSelectedQuestion].question
         questionField.text = questionDictionary
         
+        // If options are not available then buttoon is hidden.
         if(trivia[indexOfSelectedQuestion].answers["option1"] != nil) { option1.setTitle(trivia[indexOfSelectedQuestion].answers["option1"]!, for: UIControlState.normal)
         }else{ option1 .isHidden = true }
         
@@ -65,14 +76,13 @@ class ViewController: UIViewController {
         }else{ option4.isHidden = true }
         
         
+        // Time starts at 15 sec and decreases every second.
+        timeLeft.text = ("15")
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ViewController.showTime), userInfo: nil, repeats: true)
+        
         playAgainButton.isHidden = true
     }
     
-    
-    func timer() {
-        
-        
-    }
     
     
     func displayScore() {
@@ -81,6 +91,7 @@ class ViewController: UIViewController {
         option2.isHidden = true
         option3.isHidden = true
         option4.isHidden = true
+        CorrectAnswer.isHidden = true
         
         // Display play again button
         playAgainButton.isHidden = false
@@ -92,6 +103,7 @@ class ViewController: UIViewController {
     @IBAction func checkAnswer(_ sender: UIButton) {
         // Increment the questions asked counter
         questionsAsked += 1
+        CorrectAnswer.isHidden = false
         
         let selectedQuestionDict = trivia[indexOfSelectedQuestion].correctAnswer // Change names
         let correctAnswer = selectedQuestionDict // ( Change name )
@@ -100,14 +112,17 @@ class ViewController: UIViewController {
             (sender === option2  &&  trivia[indexOfSelectedQuestion].answers["option2"]! == trivia[indexOfSelectedQuestion].correctAnswer) ||
             (sender === option3   &&  trivia[indexOfSelectedQuestion].answers["option3"]! == trivia[indexOfSelectedQuestion].correctAnswer) ||
             (sender === option4  &&  trivia[indexOfSelectedQuestion].answers["option4"]! == trivia[indexOfSelectedQuestion].correctAnswer)
-        
         {
             correctQuestions += 1
             questionField.text = "Correct!"
         } else {
             questionField.text = "Sorry, wrong answer!"
-            DisplayAnswer.text = "Correct answer is \(correctAnswer)"
+            CorrectAnswer.text = "Correct answer is \(correctAnswer)"
         }
+        
+        // When user presses answer then time stops and resets.
+        timer.invalidate()
+        time = 0
         
         loadNextRoundWithDelay(seconds: 2)
     }
@@ -128,10 +143,17 @@ class ViewController: UIViewController {
         option2.isHidden = false
         option3.isHidden = false
         option4.isHidden = false
+        CorrectAnswer.isHidden = true
         
         questionsAsked = 0
         correctQuestions = 0
         nextRound()
+    }
+    
+    // Time is decreased and displayed every second.
+    func showTime() {
+        time -= 1
+        timeLeft.text = "\(time)"
     }
     
 
