@@ -105,17 +105,34 @@ class ViewController: UIViewController {
         questionsAsked += 1
         CorrectAnswer.isHidden = false
         
-        let selectedQuestionDict = trivia[indexOfSelectedQuestion].correctAnswer // Change names
-        let correctAnswer = selectedQuestionDict // ( Change name )
+        let correctAnswer = trivia[indexOfSelectedQuestion].correctAnswer // Change names
         
+<<<<<<< HEAD
         if (sender === option1  &&  trivia[indexOfSelectedQuestion].answers["option1"]! == trivia[indexOfSelectedQuestion].correctAnswer) ||
             (sender === option2  &&  trivia[indexOfSelectedQuestion].answers["option2"]! == trivia[indexOfSelectedQuestion].correctAnswer) ||
             (sender === option3   &&  trivia[indexOfSelectedQuestion].answers["option3"]! == trivia[indexOfSelectedQuestion].correctAnswer) ||
             (sender === option4  &&  trivia[indexOfSelectedQuestion].answers["option4"]! == trivia[indexOfSelectedQuestion].correctAnswer)
         {
+=======
+        
+        if (sender === option1  &&  trivia[indexOfSelectedQuestion].answers["option1"]! == correctAnswer) {
+>>>>>>> origin/master
             correctQuestions += 1
             questionField.text = "Correct!"
-        } else {
+        }
+        else if  (sender === option2  &&  trivia[indexOfSelectedQuestion].answers["option2"]! == correctAnswer){
+            correctQuestions += 1
+            questionField.text = "Correct!"
+        }
+        else if (sender === option3   &&  trivia[indexOfSelectedQuestion].answers["option3"]! == correctAnswer){
+            correctQuestions += 1
+            questionField.text = "Correct!"
+        }
+        else if (sender === option4  &&  trivia[indexOfSelectedQuestion].answers["option4"]! == correctAnswer){
+            correctQuestions += 1
+            questionField.text = "Correct!"
+        }
+        else {
             questionField.text = "Sorry, wrong answer!"
             CorrectAnswer.text = "Correct answer is \(correctAnswer)"
         }
